@@ -1,0 +1,32 @@
+[package]
+name = "scan"
+version = "0.1.0"
+authors = ["Reinhard Knoll <reinhard@bluelab.com>"]
+edition = "2021"
+resolver = "2"
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true    # Symbols are nice and they don't increase the size on Flash
+opt-level = "z"
+
+[features]
+default = ["native"]
+native = ["esp-idf-sys/native"]
+
+[dependencies]
+esp-idf-svc = { version = "=0.36.7", features = ["experimental", "alloc"] }
+esp-idf-sys = { version = "=0.30.4", features = ["binstart"] }
+esp32-c3-dkc02-bsc = { path = "../../common/lib/esp32-c3-dkc02-bsc" }
+embedded-svc = "=0.16.5"
+log = "0.4"
+anyhow = "1"
+
+[build-dependencies]
+embuild = "0.28"
+anyhow = "1"
+
+[patch.crates-io]
+riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b" }
